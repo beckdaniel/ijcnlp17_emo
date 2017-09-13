@@ -29,13 +29,13 @@ Install GPflow
 
 > pip install gpflow
 
-## Preprocessing
+## Configuration and Preprocessing
 
-The preprocessing script is `bin/preprocess.sh`. It assumes the repository is located in your home folder so you can run the scripts from anywhere in your command line. If the repository is somewhere else, change the `MAIN_FOLDER` variable inside the script before running it.
+All code assume the repository is located in your home folder with its original name, so you can run the scripts from anywhere in your command line. If the repository is somewhere else and/or you cloned it with a different name, change the `MAIN_FOLDER` variable inside the `bin/config.sh` file.
 
-Once you're set, just run it:
+Once you're set, you can run the preprocessing script:
 
-> bin/preprocess.sh
+> `bin/preprocess.sh`
 
 This will unpack the dataset and the word embeddings, as well as formatting the dataset in a friendlier format for the experiment scripts. It will also generate the data splits for 10-fold cross-validation, i the `splits` folder.
 
