@@ -37,7 +37,7 @@ Once you're set, you can run the preprocessing script:
 
 > `bin/preprocess.sh`
 
-This will unpack the dataset and the word embeddings, as well as formatting the dataset in a friendlier format for the experiment scripts. It will also generate the data splits for 10-fold cross-validation, i the `splits` folder.
+This will unpack the dataset and the word embeddings, as well as formatting the dataset in a friendlier format for the experiment scripts. It will also generate the data splits for 10-fold cross-validation, in the `splits` folder.
 
 ## Running the experiments
 
