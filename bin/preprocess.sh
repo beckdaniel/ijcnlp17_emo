@@ -1,10 +1,10 @@
 #!/bin/bash
 
 DIR=`dirname $0`
-source $DIR/config.sh
+#source $DIR/config.sh
+MAIN_FOLDER=$($DIR/config.py)
 DATA=$MAIN_FOLDER/data
 SPLITS=$MAIN_FOLDER/splits
-
 
 # Unpack data and embeddings
 tar -xzf $DATA/AffectiveText.Semeval.2007.tar.gz -C $DATA
@@ -36,5 +36,3 @@ do
 	head -$FOLDSIZE > $SPLITS/$FOLD/instances.test.txt
     tail -$(( ( 10 - $FOLD - 1 ) * $FOLDSIZE)) $DATA/instances.txt >> $SPLITS/$FOLD/instances.train.txt
 done
-
-	    
