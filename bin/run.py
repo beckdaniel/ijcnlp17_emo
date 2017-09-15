@@ -49,7 +49,7 @@ for fold in args.folds:
     exp.eval_models()
 
     # Log into results folder
-    results_dir = os.path.join(MAIN, 'results', str(fold))
+    results_dir = os.path.join(MAIN, 'results', args.model, str(fold))
     if not os.path.exists(results_dir):
         os.makedirs(results_dir)
     exp.save_metrics(results_dir)
