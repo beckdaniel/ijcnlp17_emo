@@ -35,4 +35,8 @@ do
     tail -$(( ( 10 - $FOLD ) * $FOLDSIZE)) $DATA/instances.txt | \
 	head -$FOLDSIZE > $SPLITS/$FOLD/instances.test.txt
     tail -$(( ( 10 - $FOLD - 1 ) * $FOLDSIZE)) $DATA/instances.txt >> $SPLITS/$FOLD/instances.train.txt
+    head -$(($FOLD * $FOLDSIZE)) $DATA/emotion_scores.txt > $SPLITS/$FOLD/emotion_scores.train.txt
+    tail -$(( ( 10 - $FOLD ) * $FOLDSIZE)) $DATA/emotion_scores.txt | \
+	head -$FOLDSIZE > $SPLITS/$FOLD/emotion_scores.test.txt
+    tail -$(( ( 10 - $FOLD - 1 ) * $FOLDSIZE)) $DATA/emotion_scores.txt >> $SPLITS/$FOLD/emotion_scores.train.txt
 done

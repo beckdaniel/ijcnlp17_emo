@@ -1,18 +1,18 @@
+#!/usr/bin/env python
+
 import argparse
 import os
 import subprocess
 import numpy as np
 
-from sklearn.linear_model import RidgeCV
-from sklearn.svm import SVR
-from scipy.stats.stats import pearsonr
-
-#import util
+import util
 import config
 
 
 # Constants
 MAIN = config.MAIN_FOLDER
+EMBS = config.EMBS
+EMOS = config.EMOS
 
 
 # Parse input
@@ -22,3 +22,31 @@ parser.add_argument('-f', '--folds', nargs='*', type=int, default=[0])
 args = parser.parse_args()
 
 
+# Load embeddings
+embs = util.load_embs(EMBS)
+
+
+# For each cross-validation fold...
+for fold in args.folds:
+    # Load data
+    folder = os.path.join(MAIN, 'splits', str(fold))
+    with open(os.path.join(folder, 'instances.train.txt')) as f:
+        X_train = [util.preprocess_sent(line.split('_')[1]) for line in f]
+    with open(os.path.join(folder, 'instances.test.txt')) as f:
+        X_test = [util.preprocess_sent(line.split('_')[1]) for line in f]
+    Y_train = np.loadtxt(os.path.join(folder, 'emotion_scores.train.txt'))[:, 1:]
+    Y_test = np.loadtxt(os.path.join(folder, 'emotion_scores.test.txt'))[:, 1:]
+
+    # Preprocess sents
+    X_train = np.array([util.average_sent(sent, embs) for sent in X_train])
+    X_test = np.array([util.average_sent(sent, embs) for sent in X_test])
+
+    # Train and evaluate model (on all emotions)
+    data = experiment.Data(X_train, Y_train, X_test, Y_test)
+    exp = experiment.Experiment(args.model, data)
+    exp.train_model()
+    exp.eval_model()
+
+    # Log into results folder
+    #exp.save_metrics()
+    #exp.save_predictions()
