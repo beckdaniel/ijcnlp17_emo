@@ -3,7 +3,9 @@
 import argparse
 import os
 import subprocess
+
 import numpy as np
+import sklearn.preprocessing as pp
 
 import util
 import config
@@ -41,6 +43,15 @@ for fold in args.folds:
     # Preprocess sents
     X_train = np.array([util.average_sent(sent, embs) for sent in X_train])
     X_test = np.array([util.average_sent(sent, embs) for sent in X_test])
+    #X_scaler = pp.StandardScaler()
+    #X_scaler.fit(X_train)
+    #X_train = X_scaler.transform(X_train)
+    #X_test = X_scaler.transform(X_test)
+    #Y_scaler = pp.StandardScaler()
+    #Y_scaler.fit(Y_train)
+    #Y_train = Y_scaler.transform(Y_train)
+    #Y_test = Y_scaler.transform(Y_test)
+    
 
     # Train and evaluate model (on all emotions)
     data = experiment.Data(X_train, Y_train, X_test, Y_test)
@@ -50,7 +61,10 @@ for fold in args.folds:
 
     # Log into results folder
     results_dir = os.path.join(MAIN, 'results', args.model, str(fold))
+    print(results_dir)
     if not os.path.exists(results_dir):
         os.makedirs(results_dir)
     exp.save_metrics(results_dir)
     exp.save_predictions(results_dir)
+
+    print("FINISHED FOLD: %s" % fold)
