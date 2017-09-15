@@ -7,6 +7,7 @@ import numpy as np
 
 import util
 import config
+import experiment
 
 
 # Constants
@@ -44,9 +45,12 @@ for fold in args.folds:
     # Train and evaluate model (on all emotions)
     data = experiment.Data(X_train, Y_train, X_test, Y_test)
     exp = experiment.Experiment(args.model, data)
-    exp.train_model()
-    exp.eval_model()
+    exp.train_models()
+    exp.eval_models()
 
     # Log into results folder
-    #exp.save_metrics()
-    #exp.save_predictions()
+    results_dir = os.path.join(MAIN, 'results', str(fold))
+    if not os.path.exists(results_dir):
+        os.makedirs(results_dir)
+    exp.save_metrics(results_dir)
+    exp.save_predictions(results_dir)
