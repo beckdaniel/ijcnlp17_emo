@@ -4,6 +4,8 @@ from collections import namedtuple
 
 import numpy as np
 from sklearn.linear_model import RidgeCV
+from sklearn.svm import SVR
+from sklearn.grid_search import GridSearchCV
 from scipy.stats.stats import pearsonr
 import gpflow
 import GPy
@@ -35,7 +37,7 @@ class Experiment(object):
         self.predictions = {}
         self.metrics = {}
         for emo in config.EMOS:
-            if self.model_name == 'ridge':
+            if self.model_name == 'ridge' or self.model_name == 'svr':
                 preds = self.models[emo].predict(self.data.X_test)
                 self.predictions[emo] = preds
                 self.metrics[emo] = pearsonr(preds, self.data.Y_test[:, config.EMOS[emo]])
@@ -61,12 +63,22 @@ class Experiment(object):
     def _train_model(self, X_train, Y_train):
         if self.model_name == 'ridge':
             return self._train_ridge(X_train, Y_train)
+        elif self.model_name == 'svr':
+            return self._train_svr(X_train, Y_train)
         elif 'gp' in self.model_name:
             kernel_name = self.model_name.split('_')[1]
             return self._train_gp(X_train, Y_train, kernel_name)
 
     def _train_ridge(self, X_train, Y_train):
         model = RidgeCV(alphas=np.logspace(-2, 2, 5))
+        model.fit(X_train, Y_train)
+        return model
+
+    def _train_svr(self, X_train, Y_train):
+        tuned_parameters = [{'C': np.logspace(-2, 2 ,5),
+                             'gamma': np.logspace(-2, 2, 5),
+                             'epsilon': np.logspace(-3, 1, 5)}]
+        model = GridSearchCV(SVR(kernel='rbf'), tuned_parameters)
         model.fit(X_train, Y_train)
         return model
 
