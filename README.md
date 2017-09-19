@@ -9,7 +9,11 @@ Download the "Affective Text" dataset and put the gzipped file in the "data" fol
 
 https://web.eecs.umich.edu/~mihalcea/downloads.html
 
-Download GloVe word embeddings, the version trained on Wikipedia and Gigaword ("glove.6B.zip") and put it in the "folder":
+Download the datasets for the WASSA 2017 shared task. Make sure you download the version *with* intensity labels. Put all files in the "data" folder:
+
+http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html
+
+Download GloVe word embeddings, the version trained on Wikipedia and Gigaword ("glove.6B.zip") and put it in the "data" folder:
 
 https://nlp.stanford.edu/projects/glove/
 
@@ -25,9 +29,9 @@ Install scikit-learn
 
 > pip install scikit-learn
 
-Install GPflow
+Install GPy
 
-> pip install gpflow
+> pip install gpy
 
 ## Configuration and Preprocessing
 
