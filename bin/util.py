@@ -1,5 +1,5 @@
 import numpy as np
-from nltk.tokenize import word_tokenize
+from nltk.tokenize import TreebankWordTokenizer as Tok
 from collections import defaultdict
 
 
@@ -36,7 +36,9 @@ def preprocess_sent(sent):
     Take a sentence in string format and returns
     a list of lemmatized tokens.
     """
-    tokenized = word_tokenize(sent.lower())
+    #tokenized = word_tokenize(sent.lower())
+    tokenizer = Tok()
+    tokenized = tokenizer.tokenize(sent.lower())
     return tokenized
 
 
