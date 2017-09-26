@@ -23,15 +23,15 @@ All code uses Python, we recommend you use virtualenv to define an isolate virtu
 
 Install NLTK
 
-> pip install nltk
+> `pip install nltk`
 
 Install scikit-learn
 
-> pip install scikit-learn
+> `pip install scikit-learn`
 
 Install GPy
 
-> pip install gpy
+> `pip install gpy`
 
 ## Configuration and Preprocessing
 
@@ -41,13 +41,15 @@ Once you're set, you can run the preprocessing script:
 
 > `bin/preprocess.sh`
 
-This will unpack the dataset and the word embeddings, as well as formatting the dataset in a friendlier format for the experiment scripts. It will also generate the data splits for 10-fold cross-validation, in the `splits` folder.
+This will unpack the dataset and the word embeddings, as well as formatting the dataset in a friendlier format for the experiment scripts. It will also generate the SemEval 2007 data splits for 10-fold cross-validation, in the `splits` folder.
 
 ## Running the experiments
 
 The `bin/run_all.sh` script replicates all models in the paper with 10-fold cross-validation, saving predictions in the `preds` folder and final scores in the `results` folder. This can take a long time to finish though.
 
-A more fine-grained replication is available using the `bin/run.py` script, which should be tried first for testing purposes. A single run of this script will train a `RidgeCV` regression model on the first fold. Options for the remaining models are available, use the '--help' flag for a description.
+For the SemEval 2007 experiments a more fine-grained replication is available using the `bin/run.py` script, which should be tried first for testing purposes. A single run of this script will train a `RidgeCV` regression model on the first fold. Options for the remaining models are available, use the '--help' flag for a description.
+
+For the WASSA 2017 experiments, replication is available using the `bin/run_wassa.py` script. This uses the official test set from the shared task.
 
 ## Collecting final results
 
